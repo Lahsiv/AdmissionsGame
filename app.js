@@ -29,6 +29,9 @@ app.use(express.static(path.join(__dirname, './client', 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
+app.use(express.static('public'));
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
