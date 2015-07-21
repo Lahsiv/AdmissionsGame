@@ -2,7 +2,7 @@
 //  scp -i Other/jellyvish-key-pair-oregon.pem -r AdmissionsGame ec2-user@ec2-52-27-180-7.us-west-2.compute.amazonaws.com:~
 //  nohup npm start > /dev/null 2>&1&
 
-var express = require('express');
+var express = require('express')
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -13,6 +13,10 @@ var routes = require('./server/routes/index');
 var users = require('./server/routes/users');
 
 var app = express();
+
+//CORS middleware
+var cors = require('cors')
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,7 +34,6 @@ app.use('/', routes);
 app.use('/users', users);
 
 app.use(express.static('public'));
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

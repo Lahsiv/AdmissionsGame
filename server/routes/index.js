@@ -11,37 +11,39 @@ router.get('/', function(req, res) {
   res.sendFile(path.join(appDir+'/public/index.html'));
 });
 
-router.get('/profile', function(req, res) {
-   var results = [];
+router.get('/profiles/:id', function(req, res) {
+   var results;
 
-      // Get a Postgres client from the connection pool
-      pg.connect(connection_string, function(err, client, done) {
+  // Get a Postgres client from the connection pool
+  pg.connect(connection_string, function(err, client, done) {
 
-          // SQL Query > Select Data
-        if(Math.random() < .5) {
-          var query = client.query("SELECT * FROM profiles WHERE decision = 'false' ORDER BY RANDOM() LIMIT 1")
-        }
-        else {
-          var query = client.query("SELECT * FROM profiles WHERE decision = 'false' ORDER BY RANDOM() LIMIT 1")
-        }
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            results.push(row);
-        });
-
-          // After all data is returned, close connection and return results
-          query.on('end', function() {
-              client.end();
-              return res.json(results);
-          });
-
-          // Handle Errors
-          if(err) {
-            console.log(err);
-          }
-
-      }); 
+  // SQL Query > Select Data
+  if(Math.random() < .5) {
+    var query = client.query("SELECT * FROM profiles WHERE decision = 'true' ORDER BY RANDOM() LIMIT 1")
+  }
+  else {
+    var query = client.query("SELECT * FROM profiles WHERE decision = 'false' ORDER BY RANDOM() LIMIT 1")
+  }
+  // Stream results back one row at a time
+  query.on('row', function(row) {
+      results = row;
   });
+
+  // After all data is returned, close connection and return results
+  query.on('end', function() {
+      client.end();
+      payload = {"profile" : results};
+      console.log(payload)
+      return res.json(payload);
+  });
+
+  // Handle Errors
+  if(err) {
+    console.log(err);
+  }
+
+  });
+});
 
 router.get('/guess', function(req, res) {
   res.send("You sent a GET request to /guess. Try sending a POST request to this endpoint instead");
