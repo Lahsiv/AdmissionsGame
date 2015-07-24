@@ -1,5 +1,56 @@
-<h2 class="ui block blue header centered">Froshmate: Admissions Game</h2>
-<div class="ui one column grid container">
+
+<!-- This defines the header for the site -->
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+</head>
+<style type="text/css">
+    {# set default font for website #}
+    * {
+      font-family: 'Droid Sans', sans-serif;
+    }
+</style>
+
+<div class="ui relaxed column grid">
+  <div class="row" style="background-color: #FFFFFF"></div>
+  <div class="row" style="background-color: #FFFFFF">
+    <div class="one wide column"></div>
+    <div class="five wide column">
+      <a href="/">
+        <img class="ui mini image" src="/images/logo.png">
+      </a>
+    </div>
+    <!-- 6/16 columns used so far, rest have to add to 10-->
+    <div class="five wide column"></div>
+    <div class="four wide column">
+      <div class="ui three column grid">
+        <div class="column">
+          <button id="den_button" class="ui fade blue basic button">About</button>
+        </div>
+        <div class="column">
+          <a href="/login">
+            <button id="den_button" class="ui fade blue basic button">Login</button>
+          </a>
+        </div>
+        <div class="column">
+          <a href="/signup">
+            <button id="den_button" class="ui fade blue basic button">Signup</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Below is the login modal-->
+<div class="ui modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Sign up for Froshmate!
+  </div>
+</div>
+
+<!-- This is where everything else goes-->
+<div class="ui one column page grid">
   <div class="column">
     {{outlet}}
   </div>
