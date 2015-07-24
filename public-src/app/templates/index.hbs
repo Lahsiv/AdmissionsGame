@@ -14,27 +14,137 @@
       Think of it as giving you a friend at every college.
     </p>
   </div>
+  <div id="jump-to"></div>
   <div class="column centered row">
+    <div id="scroll-to"></div>
     <p align="center" style="font-size:120%"><br>
-      Sign up now, and we'll contact you later this summer<br>
-      with exclusive early access.
+      Sign up now for exclusive early access.
     </p>
   </div>
+  <div class="four column centered row">
+    <div class="ui buttons">
+      <button class="ui button" {{action 'isStudent'}}>High Schooler</button>
+      <div class="or"></div>
+      <button class="ui primary button" {{action 'isCollege'}}>College Student</button>
+    </div>
+  </div>
   <div class="column centered row">
-    <div class="seven wide column">
-      <form class="ui form">
-        <div class="field">
-          <select class="ui dropdown">
-            <option value="">I am a...</option>
-            <option value="1">College Student</option>
-            <option value="0">High School Student</option>
-          </select>
-        </div>
-        <div class="field">
-          <input type="text" name="email" placeholder="Email">
-        </div>
+    <div class="five wide column">
+      <form class="ui center aligned form">
+        {{#if highschooler}}
+          <div class="two fields">
+            <div class="field">
+              <input type="text" name="first-name" placeholder="First name">
+            </div>
+            <div class="field">
+              <input type="text" name="last-name" placeholder="Last name">
+            </div>
+          </div>
+          <div class="field">
+            <input type="text" name="email" placeholder="Email">
+          </div>
+          <div class="field">
+            <input type="text" name="hschool" placeholder="School">
+          </div>
+          <div class="field">
+            <input type="text" name="int_college1" placeholder="What's your dream college?">
+          </div>
+          <div class="ui bottom attached basic blue button">Sign up</div>
+        {{/if}}
+        {{#if collegestudent}}
+          <div class="two fields">
+            <div class="field">
+              <input type="text" name="first-name" placeholder="First name">
+            </div>
+            <div class="field">
+              <input type="text" name="last-name" placeholder="Last name">
+            </div>
+          </div>
+          <div class="field">
+            <input type="text" name="email" placeholder="Email">
+          </div>
+          <div class="field">
+            <input type="text" name="college" placeholder="College">
+          </div>
+          <div class="ui bottom attached blue button">Sign up</div>
+        {{/if}}
       </form>
     </div>
   </div>
-
+</div>
+<div class="ui column grid">
+  <div class="row" style="background-color: #FFFFFF"></div>
+  <div class="three column row" style="background-color: #FFFFFF">
+    <div class="ten wide column">
+      <p class="ui center aligned blue header" style="font-size:300%">
+        Meet College Students</p>
+      <p align="center" style="font-size:150%"><br>
+        Meet students, like Zartosht, that attend<br>
+        your dream college. They'll tell you all<br>
+        about the school and application process.<br><br>
+        And you can trust your friends to be honest,<br>
+        giving you the real facts about campus.
+      </p>
+    </div>
+    <div class="six wide column">
+      <h2 class="ui icon header">
+        <img class="ui small image" src="/images/zart.png">
+        <div class="content">
+          Zartosht Ahlers
+          <h3 class="ui header">Princeton '18</h3>
+          <div class="sub header">
+            "I love using Froshmate because it gives me<br>
+            an opportunity to help high schoolers in need."
+          </div>
+        </div>
+      </h2>
+    </div>
+  </div>
+  <div class="row"></div>
+  <div class="three column row">
+    <div class="eight wide column">
+      <h2 class="ui center aligned icon header">
+        <img class="ui medium image" src="/images/varun.png">
+        <div class="content">
+          Varun Jain
+          <h3 class="ui header">Duke '18</h3>
+          <div class="sub header">
+            "I wish I had Froshmate when
+            I was applying to college.<br>
+            It would have made the process
+            much less stressful."
+          </div>
+        </div>
+      </h2>
+    </div>
+    <div class="eight wide column">
+        <p class="ui center aligned blue header" style="font-size:300%">
+          Ditch the Stress</p>
+        <p align="center" style="font-size:150%"><br>
+        Stop stressing over details on your app<br>
+        or on picking the right college. <br><br>
+        By talking to a friend, you can gain confidence<br>
+        with your application, and you'll be sure<br>
+        that you'll have a blast at any college.
+      </p>
+    </div>
+  </div>
+  <div class="row" style="background-color: #FFFFFF"></div>
+  <div class="two column centered row" style="background-color: #FFFFFF">
+    <div class="column">
+      <p class="ui center aligned blue header" style="font-size:350%">
+        So what are you waiting for?
+      </p>
+    </div>
+  </div>
+  <div class="two column centered row" style="background-color: #FFFFFF">
+    <button class="ui basic blue center button" {{action 'scrollToSignup'}}>
+      <p class="ui center aligned header" style="font-size:250%">
+        Sign up now.
+      </p>
+    </button>
+  </div>
+  <div class="two column centered row" style="background-color: #FFFFFF">
+    <div id="twenty"></div>
+  </div>
 </div>

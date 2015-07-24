@@ -41,17 +41,25 @@
   </div>
 </div>
 
-<!-- Below is the login modal-->
-<div class="ui modal">
-  <i class="close icon"></i>
-  <div class="header">
-    Sign up for Froshmate!
-  </div>
-</div>
-
 <!-- This is where everything else goes-->
-<div class="ui one column page grid">
-  <div class="column">
-    {{outlet}}
+{{outlet}}
+
+<footer>
+  <div class="ui grid">
+    <div class="ui centered row">
+      <div class="ui divided horizontal footer link list">
+        <div class="item">
+          &copy; Froshmate
+        </div>
+
+        <div class="item">
+          v 0.1.1
+        </div>
+
+        <div class="item">
+          About
+        </div><a href="https://github.com/Anachron/satisfy" class="item">Homepage</a>
+      </div>
+    </div>
   </div>
-</div>
+</footer>
