@@ -2,6 +2,7 @@
 //  ssh -v -i froshmate-landing-page-instance-key.pem ubuntu@ec2-52-24-159-62.us-west-2.compute.amazonaws.com
 //  scp -v -i Other/froshmate-landing-page-instance-key.pem -r AdmissionsGame ubuntu@ec2-52-24-159-62.us-west-2.compute.amazonaws.com:~
 //  nohup npm start > /dev/null 2>&1&
+//  nohup ember s > /dev/null 2>&1&
 
 var express = require('express')
 var path = require('path');
