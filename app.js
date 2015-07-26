@@ -1,5 +1,6 @@
 //To push to AWS, use
-//  scp -i Other/jellyvish-key-pair-oregon.pem -r AdmissionsGame ec2-user@ec2-52-27-180-7.us-west-2.compute.amazonaws.com:~
+//  ssh -v -i froshmate-landing-page-instance-key.pem ubuntu@ec2-52-24-159-62.us-west-2.compute.amazonaws.com
+//  scp -v -i Other/froshmate-landing-page-instance-key.pem -r AdmissionsGame ubuntu@ec2-52-24-159-62.us-west-2.compute.amazonaws.com:~
 //  nohup npm start > /dev/null 2>&1&
 
 var express = require('express')

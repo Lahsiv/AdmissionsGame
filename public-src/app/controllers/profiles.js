@@ -11,19 +11,12 @@ export default Ember.Controller.extend({
 
   actions: {
     reload: function() {
-      //this.get('model').reload();
-      //this.set('guessed', false);
       this.set('guessed', false);
       var self = this;
       Ember.$.getJSON('http://localhost:3000/profiles/1', function(post) {
-        self.set('model', Ember.Object.create(post));
-      })
-      //this.get('target').refresh();
-      /*var self = this;
-      this.store.find('profile', 1).then(function(result) {
-        self.set('model', result);
-        debugger;
-      })*/
+        console.log(post.profile);
+        self.set('model', Ember.Object.create(post.profile));
+      });
     },
 
     guess: function(value, actual) {

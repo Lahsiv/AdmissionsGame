@@ -9,6 +9,9 @@ Router.map(function() {
   this.route('profiles');
   this.route('signup');
   this.route('login');
+  this.route('faq');
+  this.route('theteam');
+  this.route('index2');
 });
 
 export default Router;
