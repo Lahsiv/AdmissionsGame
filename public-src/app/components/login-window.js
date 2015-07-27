@@ -1,10 +1,23 @@
 import Ember from 'ember';
 
+
 export default Ember.Component.extend({
   highschooler: false,
   collegestudent: false,
+  issigningup: false,
+  something_selected: function() {
+    return (this.get('highschooler') || this.get('collegestudent'));
+  }.property('highschooler', 'collegestudent'),
 
-  colleges: ["caltech", "uchicago"],
+  password: "",
+
+  invalid_college: false,
+  invalid_name: false,
+  invalid_dream_college: false,
+  invalid_school: false,
+  invalid_email: false,
+  invalid_password: false,
+  email_taken: false,
 
   actions: {
     isStudent: function() {
@@ -20,6 +33,115 @@ export default Ember.Component.extend({
       }
       this.set('highschooler', false);
       this.set('collegestudent', true);
+    },
+    validate_highschool: function() {
+      this.validate_common();
+      if(!this.get("dream_college1")) {
+        this.set('invalid_dream_college', true);
+      } else {
+        this.set('invalid_dream_college', false);
+      }
+      if(!this.get("hschool")) {
+        this.set('invalid_school', true);
+      } else {
+        this.set('invalid_school', false);
+      }
+
+      if(this.get('invalid_name') || this.get('invalid_password') || this.get('invalid_email') || this.get('invalid_school') || this.get('invalid_dream_college')) {
+        return;
+      }
+      else {
+        this.signup_highschool();
+      }
+    },
+
+    validate_college: function() {
+      this.validate_common();
+      if(!document.getElementById("college").value) {
+        this.set('invalid_college', true);
+      } else {
+        this.set('invalid_college', false);
+      }
+      if(this.get('invalid_name') || this.get('invalid_password') || this.get('invalid_email') || this.get('invalid_college')) {
+        return;
+      }
+      else {
+        this.signup_college();
+      }
     }
+  },
+
+  validate_common : function() {
+    if(this.isEmailValid(this.get('email'))) {
+      this.set('invalid_email', false);
+    } else {
+      this.set('invalid_email', true);
+    }
+    if(!this.get("first-name") || !this.get('last-name')) {
+      this.set('invalid_name', true);
+    } else {
+      this.set('invalid_name', false);
+    }
+    if(this.get("password").length < 6) {
+      this.set('invalid_password', true);
+    } else {
+      this.set('invalid_password', false);
+    }
+    return;
+  },
+
+  signup_college : function() {
+    this.set('issigningup', true);
+    document.getElementById("cbutton").disabled = true;
+    var body = new Object();
+    body.first_name = this.get('first-name');
+    body.last_name = this.get('last-name');
+    body.college = document.getElementById("college").value;
+    body.email = this.get('email');
+    body.password = this.get('password');
+    var self = this;
+    Ember.$.post('http://localhost:3000/login3cs', body, function(post) {
+      self.set('issigningup', false);
+      console.log(post);
+      if(post.response === "There was an error.") {
+        self.set('email_taken', true);
+      }
+      else {
+        self.set('email_taken', false);
+        /*Cookies.set('u_mail', self.get('email'), { expires: 7 });
+        Cookies.set('u_fname', self.get('first-name'), { expires: 7 });
+        Cookies.set('u_lname', self.get('last-name'), { expires: 7 });
+        Cookies.set('u_college', self.get('college'), { expires: 7 });
+        Cookies.set('is_hs', false, { expires: 7 });*/
+        window.location.replace("/");
+      }
+    });
+  },
+
+  signup_highschool : function() {
+    this.set('issigningup', true);
+    var body = new Object();
+    body.first_name = this.get('first-name');
+    body.last_name = this.get('last-name');
+    body.email = this.get('email');
+    body.dream_college1 = this.get('dream_college1');
+    body.school = this.get('hschool');
+    body.password = this.get('password');
+    var self = this;
+    Ember.$.post('http://localhost:3000/login3hs', body, function(post) {
+      self.set('issigningup', false);
+      console.log(post);
+      if(post.response === "There was an error.") {
+        self.set('email_taken', true);
+      }
+      else {
+        self.set('email_taken', false);
+      }
+    });
+  },
+
+  isEmailValid : function(email) {
+    var regex = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+    return (email !== undefined && email.match(regex) != null);
   }
 });

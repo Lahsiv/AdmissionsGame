@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
     reload: function() {
       this.set('guessed', false);
       var self = this;
-      Ember.$.getJSON('http://52.24.159.62:3000/profiles/1', function(post) {
+      Ember.$.getJSON('http://localhost:3000/profiles/1', function(post) {
         console.log(post.profile);
         self.set('model', Ember.Object.create(post.profile));
       });

@@ -16,34 +16,96 @@ router.get('/profiles/:id', function(req, res) {
 
   // Get a Postgres client from the connection pool
   pg.connect(connection_string, function(err, client, done) {
+    // SQL Query > Select Data
+    if(Math.random() < .5) {
+      var query = client.query("SELECT * FROM profiles WHERE decision = 'true' ORDER BY RANDOM() LIMIT 1")
+    }
+    else {
+      var query = client.query("SELECT * FROM profiles WHERE decision = 'false' ORDER BY RANDOM() LIMIT 1")
+    }
+    // Stream results back one row at a time
+    query.on('row', function(row) {
+        results = row;
+    });
 
-  // SQL Query > Select Data
-  if(Math.random() < .5) {
-    var query = client.query("SELECT * FROM profiles WHERE decision = 'true' ORDER BY RANDOM() LIMIT 1")
-  }
-  else {
-    var query = client.query("SELECT * FROM profiles WHERE decision = 'false' ORDER BY RANDOM() LIMIT 1")
-  }
-  // Stream results back one row at a time
-  query.on('row', function(row) {
-      results = row;
-  });
+    // After all data is returned, close connection and return results
+    query.on('end', function() {
+        client.end();
+        payload = {"profile" : results};
+        console.log(payload)
+        return res.json(payload);
+    });
 
-  // After all data is returned, close connection and return results
-  query.on('end', function() {
-      client.end();
-      payload = {"profile" : results};
-      console.log(payload)
-      return res.json(payload);
-  });
-
-  // Handle Errors
-  if(err) {
-    console.log(err);
-  }
-
+    // Handle Errors
+    if(err) {
+      console.log(err);
+    }
   });
 });
+
+//handles signup requests for high schoolers
+router.post('/login3hs', function(req, res) {
+  // Get a Postgres client from the connection pool
+  pg.connect(connection_string, function(err, client, done) {
+    // SQL Query > Select Data
+    var payload;
+    var query = client.query('INSERT INTO "public"."high_school"("email", "password", "first_name", "last_name", "school", "college") VALUES($1, $2, $3, $4, $5, $6) RETURNING "id";',
+      [req.body.email, req.body.password, req.body.first_name, req.body.last_name, req.body.school, req.body.dream_college1],
+      function(err, results) {
+        if(err) {
+          console.log(err);
+          payload = {'response' : "There was an error."};
+          client.end();
+          return res.json(payload);
+        } else {
+          payload = {'response' : results};
+        }
+      }
+    )
+    // After all data is returned, close connection and return results
+    query.on('end', function() {
+        client.end();
+        return res.json(payload);
+    });
+    // Handle Errors
+    if(err) {
+      console.log(err);
+    }
+  });
+});
+
+//handles signup requests for college students
+router.post('/login3cs', function(req, res) {
+  // Get a Postgres client from the connection pool
+  console.log(req);
+  pg.connect(connection_string, function(err, client, done) {
+    // SQL Query > Select Data
+    var payload;
+    var query = client.query('INSERT INTO "public"."college"("first_name", "last_name", "college", "email", "password") VALUES($1, $2, $3, $4, $5) RETURNING "id";',
+      [req.body.first_name, req.body.last_name, req.body.college, req.body.email, req.body.password],
+      function(err, results) {
+        if(err) {
+          console.log(err);
+          payload = {'response' : "There was an error."};
+          client.end();
+          return res.json(payload);
+        } else {
+          payload = {'response' : results};
+        }
+      }
+    )
+    // After all data is returned, close connection and return results
+    query.on('end', function() {
+        client.end();
+        return res.json(payload);
+    });
+    // Handle Errors
+    if(err) {
+      console.log(err);
+    }
+  });
+});
+
 
 router.get('/guess', function(req, res) {
   res.send("You sent a GET request to /guess. Try sending a POST request to this endpoint instead");

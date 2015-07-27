@@ -10,40 +10,48 @@
 <div class="column centered row">
   <div class="five wide column">
     <form class="ui center aligned form">
-      {{#if highschooler}}
+      {{#if something_selected}}
+        {{#if email_taken}}
+          <div class="ui big red header">
+            An error occurred. Perhaps you already have an account?
+          </div>
+        {{/if}}
         <div class="two fields">
-          <div class="field">
-            <input type="text" name="first-name" placeholder="First name">
+          <div class="field {{if invalid_name 'error'}}">
+            {{input type="text" value=first-name placeholder="First name"}}
           </div>
-          <div class="field">
-            <input type="text" name="last-name" placeholder="Last name">
+          <div class="field {{if invalid_name 'error'}}">
+            {{input class="ui input" type="text" value=last-name placeholder="Last name"}}
           </div>
         </div>
-        <div class="field">
-          <input type="text" name="email" placeholder="Email">
+        <div class="field {{if invalid_email 'error'}}">
+          {{input class="ui input" type="text" value=email placeholder="Email"}}
         </div>
-        <div class="field">
-          <input type="text" name="hschool" placeholder="School">
+        <div class="field {{if invalid_password 'error'}}">
+          {{input class="ui input" type="password" value=password placeholder="Password"}}
+          {{#if invalid_password}}
+            <div class="ui pointing up red label">
+              Password needs to be at least 6 characters!
+            </div>
+          {{/if}}
         </div>
-        <div class="field">
-          <input type="text" name="int_college1" placeholder="What's your dream college?">
+      {{/if}}
+      {{#if highschooler}}
+        <div class="field {{if invalid_school 'error'}}">
+          {{input class="ui input" type="text" value=hschool placeholder="School"}}
         </div>
-        <div class="ui bottom attached basic blue button">Sign up</div>
+        <div class="field {{if invalid_dream_college 'error'}}">
+          {{input class="ui input" type="text" value=dream_college1 placeholder="What's your dream college?"}}
+        </div>
+        {{#if issigningup}}
+          <div id="hbutton" style="border-color:#5daaf8;border-style:solid;border-width:1px;" class="ui bottom attached basic blue loading button">bllll</div>
+        {{else}}
+          <div id="hbutton" style="border-color:#5daaf8;border-style:solid;border-width:1px;" class="ui bottom attached basic blue button" {{action 'validate_highschool'}}>Sign up</div>
+        {{/if}}
       {{/if}}
       {{#if collegestudent}}
-        <div class="two fields">
-          <div class="field">
-            <input type="text" name="first-name" placeholder="First name">
-          </div>
-          <div class="field">
-            <input type="text" name="last-name" placeholder="Last name">
-          </div>
-        </div>
         <div class="field">
-          <input type="text" name="email" placeholder="Email">
-        </div>
-        <div class="field">
-          <select class="ui search dropdown" name="college">
+           <select class="ui search dropdown {{if invalid_college 'error'}}" id="college">
             <option value="">Select College</option>
             <option value="Abilene Christian University (TX)">Abilene Christian University (TX)</option>
             <option value="Abraham Baldwin Agricultural College (GA)">Abraham Baldwin Agricultural College (GA)</option>
@@ -1834,9 +1842,14 @@
             <option value="Youngstown State University (OH)">Youngstown State University (OH)</option>
           </select>
         </div>
-        <div class="ui bottom attached blue button">Sign up</div>
+        {{#if issigningup}}
+          <div id="cbutton" class="ui bottom attached blue loading button">aslkdfj</div>
+        {{else}}
+          <div id="cbutton" class="ui bottom attached blue button" {{action 'validate_college'}}>Sign up</div>
+        {{/if}}
       {{/if}}
     </form>
+
     <script>
     Ember.$('.ui.center.aligned.form').transition('slide down');
     </script>
