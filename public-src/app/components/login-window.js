@@ -9,14 +9,11 @@ export default Ember.Component.extend({
     return (this.get('highschooler') || this.get('collegestudent'));
   }.property('highschooler', 'collegestudent'),
 
-  password: "",
-
   invalid_college: false,
   invalid_name: false,
   invalid_dream_college: false,
   invalid_school: false,
   invalid_email: false,
-  invalid_password: false,
   email_taken: false,
 
   actions: {
@@ -47,7 +44,7 @@ export default Ember.Component.extend({
         this.set('invalid_school', false);
       }
 
-      if(this.get('invalid_name') || this.get('invalid_password') || this.get('invalid_email') || this.get('invalid_school') || this.get('invalid_dream_college')) {
+      if(this.get('invalid_name') || this.get('invalid_email') || this.get('invalid_school') || this.get('invalid_dream_college')) {
         return;
       }
       else {
@@ -62,7 +59,7 @@ export default Ember.Component.extend({
       } else {
         this.set('invalid_college', false);
       }
-      if(this.get('invalid_name') || this.get('invalid_password') || this.get('invalid_email') || this.get('invalid_college')) {
+      if(this.get('invalid_name') || this.get('invalid_email') || this.get('invalid_college')) {
         return;
       }
       else {
@@ -82,11 +79,6 @@ export default Ember.Component.extend({
     } else {
       this.set('invalid_name', false);
     }
-    if(this.get("password").length < 6) {
-      this.set('invalid_password', true);
-    } else {
-      this.set('invalid_password', false);
-    }
     return;
   },
 
@@ -98,7 +90,6 @@ export default Ember.Component.extend({
     body.last_name = this.get('last-name');
     body.college = document.getElementById("college").value;
     body.email = this.get('email');
-    body.password = this.get('password');
     var self = this;
     Ember.$.post('http://localhost:3000/login3cs', body, function(post) {
       self.set('issigningup', false);
@@ -126,7 +117,6 @@ export default Ember.Component.extend({
     body.email = this.get('email');
     body.dream_college1 = this.get('dream_college1');
     body.school = this.get('hschool');
-    body.password = this.get('password');
     var self = this;
     Ember.$.post('http://localhost:3000/login3hs', body, function(post) {
       self.set('issigningup', false);

@@ -27,14 +27,6 @@
         <div class="field {{if invalid_email 'error'}}">
           {{input class="ui input" type="text" value=email placeholder="Email"}}
         </div>
-        <div class="field {{if invalid_password 'error'}}">
-          {{input class="ui input" type="password" value=password placeholder="Password"}}
-          {{#if invalid_password}}
-            <div class="ui pointing up red label">
-              Password needs to be at least 6 characters!
-            </div>
-          {{/if}}
-        </div>
       {{/if}}
       {{#if highschooler}}
         <div class="field {{if invalid_school 'error'}}">
