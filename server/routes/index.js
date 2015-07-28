@@ -50,7 +50,7 @@ router.post('/login3hs', function(req, res) {
     // SQL Query > Select Data
     var payload;
     var query = client.query('INSERT INTO "public"."high_school"("email", "password", "first_name", "last_name", "school", "college") VALUES($1, $2, $3, $4, $5, $6) RETURNING "id";',
-      [req.body.email, req.body.password, req.body.first_name, req.body.last_name, req.body.school, req.body.dream_college1],
+      [req.body.email, req.body.first_name, req.body.last_name, req.body.school, req.body.dream_college1],
       function(err, results) {
         if(err) {
           console.log(err);

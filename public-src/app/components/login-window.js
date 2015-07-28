@@ -11,12 +11,15 @@ export default Ember.Component.extend({
 
   invalid_college: false,
   invalid_name: false,
-  invalid_dream_college: false,
   invalid_school: false,
   invalid_email: false,
   email_taken: false,
 
   actions: {
+    setCollege: function(college_name) {
+      this.set('college', college_name);
+    },
+
     isStudent: function() {
       if(!this.get('collegestudent') || this.get('highschooler')) {
         Ember.$('.ui.center.aligned.form').transition('slide down');
@@ -33,18 +36,13 @@ export default Ember.Component.extend({
     },
     validate_highschool: function() {
       this.validate_common();
-      if(!this.get("dream_college1")) {
-        this.set('invalid_dream_college', true);
-      } else {
-        this.set('invalid_dream_college', false);
-      }
       if(!this.get("hschool")) {
         this.set('invalid_school', true);
       } else {
         this.set('invalid_school', false);
       }
 
-      if(this.get('invalid_name') || this.get('invalid_email') || this.get('invalid_school') || this.get('invalid_dream_college')) {
+      if(this.get('invalid_name') || this.get('invalid_email') || this.get('invalid_school') || this.get('invalid_college')) {
         return;
       }
       else {
@@ -54,12 +52,8 @@ export default Ember.Component.extend({
 
     validate_college: function() {
       this.validate_common();
-      if(!document.getElementById("college").value) {
-        this.set('invalid_college', true);
-      } else {
-        this.set('invalid_college', false);
-      }
       if(this.get('invalid_name') || this.get('invalid_email') || this.get('invalid_college')) {
+        console.log(this.get('invalid_college'));
         return;
       }
       else {
@@ -79,6 +73,13 @@ export default Ember.Component.extend({
     } else {
       this.set('invalid_name', false);
     }
+    if(!this.get('college')) {
+      this.set('invalid_college', true);
+    } else {
+      this.set('invalid_college', false);
+    }
+    console.log(this.get('college'));
+    console.log(!this.get('college'));
     return;
   },
 
@@ -88,7 +89,7 @@ export default Ember.Component.extend({
     var body = new Object();
     body.first_name = this.get('first-name');
     body.last_name = this.get('last-name');
-    body.college = document.getElementById("college").value;
+    body.college = this.get('college');
     body.email = this.get('email');
     var self = this;
     Ember.$.post('http://localhost:3000/login3cs', body, function(post) {
@@ -115,7 +116,7 @@ export default Ember.Component.extend({
     body.first_name = this.get('first-name');
     body.last_name = this.get('last-name');
     body.email = this.get('email');
-    body.dream_college1 = this.get('dream_college1');
+    body.college = this.get('college');
     body.school = this.get('hschool');
     var self = this;
     Ember.$.post('http://localhost:3000/login3hs', body, function(post) {

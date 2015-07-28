@@ -3,7 +3,6 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   actions: {
     scrolltosignup: function() {
-      debugger;
       Ember.$.fn.scrollView = function () {
           return this.each(function () {
               $('html, body').animate({
